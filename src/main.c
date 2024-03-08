@@ -1,19 +1,37 @@
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
-void prime_nums(int starting_point) {
-  int i, j;
+#define BUFSIZE 1024
+#define DATE_FORMAT "%02d-%02d-%d"
 
-  for (i = 2; i <= starting_point; i++) {
-    for (j = 1; j < i; j++) {
-      if (i % j == 0 && j != 1) {
-        break;
-      }
+void write_file(double time_activity) {
+  char path[] = "../editor_time_logs/";
+  char file_name[BUFSIZE];
+  FILE *file;
+  
+  time_t t = time(NULL);
+  struct tm tm = *localtime(&t);
 
-      if (j + 1 == i) {
-        printf("%d is prime num\n", i);
-      }
-    }
+  sprintf(file_name, DATE_FORMAT, tm.tm_mday, tm.tm_mon, tm.tm_year + 1900);
+  strcat(path, file_name);
+  
+  file = fopen(path, "w");
+
+  fprintf(file, "time = %.0fs", time_activity);  
+}
+
+void auxiliary_function(void) {
+  // this function is just checking 
+  // if the count is working
+  
+  int i;
+  printf("wait...\n");
+
+  i = 0;
+
+  while (i < 2000000000) {
+    i++;
   }
 }
 
@@ -22,11 +40,15 @@ int main(void) {
   double dif;
 
   time_execution = clock();
-  prime_nums(140000);
+
+  auxiliary_function();
+
   time_execution = clock() - time_execution;
   dif = ((double)time_execution) / CLOCKS_PER_SEC;
 
-  printf("time: %.0fs\n", dif);
+  write_file(time_execution);
+
+  printf("written\n");
 
   return 0;
 }
