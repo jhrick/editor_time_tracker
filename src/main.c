@@ -18,7 +18,7 @@ void write_file(double time_activity) {
   
   file = fopen(path, "w");
 
-  fprintf(file, "time = %.0fs", time_activity);  
+  fprintf(file, "time = %.0f seconds", time_activity);  
 }
 
 void auxiliary_function(void) {
@@ -46,9 +46,9 @@ int main(void) {
   time_execution = clock() - time_execution;
   dif = ((double)time_execution) / CLOCKS_PER_SEC;
 
-  write_file(time_execution);
+  write_file(dif);
 
-  printf("written\n");
+  printf("written. time: %.fs\n", dif);
 
   return 0;
 }
