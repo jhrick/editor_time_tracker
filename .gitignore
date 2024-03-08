@@ -1,0 +1,5 @@
+## logs files ##
+editor_time_logs/*
+
+src/*
+!src/*.c
